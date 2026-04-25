@@ -1,0 +1,54 @@
+# 🛒 Online Auction System
+
+> Mini Project | B.Tech CSE | 2021-2025
+
+## 📌 About
+A dynamic web-based Online Auction Platform built 
+using Python Django where users can register, list 
+items, place real-time bids, and make secure payments.
+
+## 👥 Team Members
+- M. Keerthana (21UP1A05A2)
+- S. Ashwini (21UP1A05C1)
+- G. Reshma (21UP1A0587)
+
+## 📜 Project Guide
+Dr. Shalima Sulthana
+Assistant Professor, CSE Dept.
+Vignan's Institute of Management and Technology for Women
+
+## 🛠️ Technologies Used
+| Technology | Purpose |
+|-----------|---------|
+| Python | Backend Language |
+| Django | Web Framework |
+| HTML/CSS | Frontend |
+| JavaScript | Dynamic Features |
+| MySQL/PostgreSQL | Database |
+
+## ✨ Features
+- ✅ User Registration & Authentication
+- ✅ Product Listing with images & pricing
+- ✅ Real-time Bidding
+- ✅ Secure Payment Integration
+- ✅ Admin Dashboard
+- ✅ Feedback & Ratings
+
+## 📊 System Modules
+| Module | Description |
+|--------|-------------|
+| Introduction | Objective & proposed system |
+| Literature Survey | Django-based auction research |
+| System Analysis | Purpose, scope & feasibility |
+| System Design | UML diagrams & architecture |
+| Implementation | Sample code & algorithms |
+| System Testing | Test cases & strategies |
+| Screenshots | UI pages |
+| Conclusions | Summary & future scope |
+
+## 🚀 How to Run
+```bash
+git clone https://github.com/Mahapati34/online-auction-system-django.git
+cd online-auction-system-django
+pip install -r requirements.txt
+python manage.py runserver
