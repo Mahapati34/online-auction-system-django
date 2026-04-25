@@ -1,0 +1,124 @@
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User, auth
+from django.contrib.auth.decorators import login_required
+from items.models import Detail, Item
+from datetime import date
+from django.core.mail import send_mail
+
+def login(request):
+    if request.method == 'POST':
+        uname = request.POST.get('u', '')
+        pass1 = request.POST.get('pa', '')
+        user = auth.authenticate(
+            username=uname, password=pass1)
+        if user == None:
+            messages.info(request,
+                'Invalid username/password')
+            return redirect('login')
+        else:
+            auth.login(request, user)
+            return redirect('home')
+    else:
+        return render(request, 'login.html')
+
+def register(request):
+    if request.method == 'POST':
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        name = request.POST['name']
+        mail = request.POST['mail']
+        p1 = request.POST['p1']
+        p2 = request.POST['p2']
+        contact = request.POST['contact']
+
+        if p1 == p2:
+            if User.objects.filter(
+                    email=mail).exists():
+                messages.info(request,
+                    'Already an User with this Email')
+                return redirect('register')
+            elif User.objects.filter(
+                    username=name).exists():
+                messages.info(request,
+                    'Already an User with this Username')
+                return redirect('register')
+            else:
+                user = User.objects.create_user(
+                    first_name=fname,
+                    last_name=lname,
+                    username=name,
+                    email=mail,
+                    password=p1)
+                user.save()
+                obj = Detail(
+                    username=name,
+                    contact=contact)
+                obj.save()
+                to = mail
+                subject = 'Online Auction'
+                msg = ('Congratulations you are '
+                       'registered successfully.')
+                res = send_mail(subject, msg,
+                    'onlineauctionsystem9@gmail.com',
+                    [to])
+                if res == 1:
+                    messages.info(request,
+                        'Password does not match')
+                    return redirect('register')
+                else:
+                    messages.info(request,
+                        'Some thing is wrong')
+                    return redirect('register')
+        else:
+            return render(request,
+                'register.html')
+    else:
+        return redirect(login_url='login')
+
+@login_required(login_url='login')
+def myprofile(request):
+    details = bidder = request.user
+    obj = Detail.objects.get(
+        highest_bidder=bidder_id)
+    cuname = details.username
+    # item_obj = Item.objects.filter(
+    #     username=cuname)
+    contact = Detail.objects.filter(
+        username=cuname)
+    return render(request, 'myprofile.html',
+        {'details': 'details',
+         'contact': 'contact'})
+
+@login_required(login_url='login')
+def log(request):
+    cuser = request.user
+    cemail = cuser.email
+    biddeditem = item_obj = Item.objects.filter(
+        owneremail=cemail)
+    pitem = Item.objects.filter(
+        owneremail=cemail).filter(status='past')
+    litem = Item.objects.filter(
+        owneremail=cemail).filter(status='live')
+    fitem = Item.objects.filter(
+        owneremail=cemail).filter(status='future')
+    cid = Item.objects.filter(
+        highest_bidder=cid)
+    item = Item.objects.filter(
+        owneremail=cemail).filter(
+        status='past').filter(item=item)
+    biddeditem = 'biddeditem'
+    return render(request, 'log.html',
+        {'biddeditem': 'biddeditem'})
+
+@login_required(login_url='login')
+def future(request):
+    items = Item.objects.filter(status='future')
+    def floutout(request):
+        auth.logout(request)
+        return redirect('login')
+
+@login_required(login_url='login')
+def
